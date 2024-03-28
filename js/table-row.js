@@ -65,7 +65,7 @@ const rowData = [
 const createRow = (obj) => {
   const trElem = `
     <tr>
-        <td class="table__cell">${obj.id}</td>
+        <td class="table__cell table__cell_id">${obj.id}</td>
         <td class="table__cell table__cell_left table__cell_name" data-id="${obj.id}">
             <span class="table__cell-id">${obj.id}</span>
             ${obj.title}
@@ -99,3 +99,24 @@ const renderGoods = (arr) => {
 const finalRenderTable = renderGoods(rowData);
 
 tableBody.insertAdjacentHTML('beforeend', finalRenderTable);
+
+const deleteRow = () => {
+  table.addEventListener('click', e => {
+    const target = e.target;
+
+    if (target.classList.contains('table__btn_del')) {
+      const tr = target.closest('tr');
+      tr.remove();
+
+      const elemIdToDelete = parseInt(tr.querySelector('.table__cell_id').textContent);
+
+      const index = rowData.findIndex(item => item.id === elemIdToDelete);
+
+      rowData.splice(index, 1);
+
+      console.log(rowData);
+    }
+  });
+};
+
+deleteRow();
